@@ -1,0 +1,93 @@
+
+
+<!--
+<form target="dummyframe" action="/songs/{{name}}" method="POST">
+  <p> Song Name<input type="text" name = "Song Name"></p>
+  <p> <input type = "submit" name = "action" value = "Submit Song"/></p>
+   <P> <input type = "submit" name = "action" value = "Clear Queue"/></p>
+   Permission to clear queue is not granted to all users. Only given to master phone, through android app
+
+</form>
+-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Multiplay</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="../static/vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="../static/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="../static/vendor/animate/animate.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="../static/vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="../static/vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="../static/vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="../static/vendor/daterangepicker/daterangepicker.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="../static/styles/util.css">
+	<link rel="stylesheet" type="text/css" href="../static/styles/main.css">
+<!--===============================================================================================-->
+  <script>
+    function addSong(){
+      alert("Song added!")
+      return true;
+    }
+  </script>
+	<!--
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script type=text/javascript>
+        $(function() {
+          $('a#search').bind('click', function() {
+            alert("Hello");
+          });
+        });
+	</script> -->
+</head>
+<body>
+  <iframe name="dummyframe" width="0" height="0" border="0" style="display: none;"></iframe>
+
+
+	<div class="container-contact100">
+
+		<div class="wrap-contact100">
+			<form target="dummyframe" action="/songs/{{name}}" method="POST" class="contact100-form validate-form" autocomplete="off" onsubmit="return addSong()">
+
+        <span class="contact100-form-title">
+					Queue Songs for Lobby {{name}}
+				</span>
+
+				<div class="wrap-input100 validate-input" data-validate="Please enter a valid search query">
+					<input class="input100" type="text" name="Song Name" placeholder="Search for songs...">
+					<span class="focus-input100"></span>
+				</div>
+
+				<div class="contact100-form-btn">
+					 <input class="contact100-form-btn" type = "submit" name = "action" value="Search" id="song" >
+				</div>
+
+			</form>
+		</div>
+	</div>
+
+	<script src="../static/vendor/jquery/jquery-3.2.1.min.js"></script>
+	<script src="../static/vendor/animsition/js/animsition.min.js"></script>
+	<script src="../static/vendor/bootstrap/js/popper.js"></script>
+	<script src="../static/vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../static/vendor/select2/select2.min.js"></script>
+	<script src="../static/vendor/daterangepicker/moment.min.js"></script>
+	<script src="../static/vendor/daterangepicker/daterangepicker.js"></script>
+	<script src="../static/vendor/countdowntime/countdowntime.js"></script>
+	<script src="../static/js/main.js"></script>
+
+
+</body>
+</html>
