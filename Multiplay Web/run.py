@@ -44,6 +44,7 @@ def show_songs(lobby_name):
             song_queues[lobby_name] = []
         song_queues[lobby_name].append(song_uri)
         print("Submitting song", song_uri)
+    print(song_queues.keys())
     return jsonify(song_queues[lobby_name])
 
 """
