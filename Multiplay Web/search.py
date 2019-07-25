@@ -4,9 +4,8 @@ from spotipy.oauth2 import SpotifyClientCredentials
 import os
 
 class SpotifySearch:
-    config = open("config.txt", "r").read()
-    id = config.split("\n")[0]
-    secret = config.split("\n")[1]
+    id = os.environ.get("WEB_KEY")
+    secret = os.environ.get("WEB_SECRET")
     client_credentials_manager = SpotifyClientCredentials(
                             client_id=id,
                             client_secret = secret)
