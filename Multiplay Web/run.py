@@ -1,8 +1,8 @@
-from flask import Flask, render_template, request, jsonify, url_for, redirect
+from flask import Flask, render_template, request, jsonify, url_for, redirect, g
 import search
 app = Flask(__name__)
 
-song_queues = dict()
+g.song_queues = dict()
 
 @app.route("/", methods=["POST", "GET"])
 def index():
@@ -35,17 +35,17 @@ def search_query():
 
 @app.route("/songs/<lobby_name>", methods=["POST", "GET"])
 def show_songs(lobby_name):
-    global song_queues
+    # global song_queues
     if request.method == "POST":
 
         song_uri = request.form["song_uri"]
         # print(song_uri)
-        if song_queues.get(lobby_name) == None:
-            song_queues[lobby_name] = []
-        song_queues[lobby_name].append(song_uri)
+        if g.song_queues.get(lobby_name) == None:
+            g.song_queues[lobby_name] = []
+        g.song_queues[lobby_name].append(song_uri)
         print("Submitting song", song_uri)
-    print(song_queues.keys())
-    return jsonify(song_queues[lobby_name])
+    print(g.song_queues.keys())
+    return jsonify(g.song_queues[lobby_name])
 
 """
     if request.method == "POST":
