@@ -1,6 +1,5 @@
 import spotipy
 import json
-import timeit
 from spotipy.oauth2 import SpotifyClientCredentials
 import os
 
