@@ -17,6 +17,8 @@
 	<title>Multiplay</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta id="lobby_vars" data-name="{{name}}">
+
 <!--===============================================================================================-->
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="../static/vendor/bootstrap/css/bootstrap.min.css">
@@ -36,21 +38,21 @@
 	<link rel="stylesheet" type="text/css" href="../static/styles/util.css">
 	<link rel="stylesheet" type="text/css" href="../static/styles/main.css">
 <!--===============================================================================================-->
+<!-- Latest compiled and minified CSS -->
+
+	<!-- jQuery library -->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+	<!-- Latest compiled JavaScript -->
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
   <script>
     function addSong(){
       alert("Song added!")
       return true;
     }
   </script>
-	<!--
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-	<script type=text/javascript>
-        $(function() {
-          $('a#search').bind('click', function() {
-            alert("Hello");
-          });
-        });
-	</script> -->
 </head>
 <body>
   <iframe name="dummyframe" width="0" height="0" border="0" style="display: none;"></iframe>
@@ -59,14 +61,14 @@
 	<div class="container-contact100">
 
 		<div class="wrap-contact100">
-			<form target="dummyframe" action="/songs/{{name}}" method="POST" class="contact100-form validate-form" autocomplete="off" onsubmit="return addSong()">
+			<form target="dummyframe" action="/songs/{{name}}" method="POST" class="contact100-form validate-form" autocomplete="off" id = "searchbar"> <!--onsubmit="return addSong()"> -->
 
         <span class="contact100-form-title">
 					Queue Songs for Lobby {{name}}
 				</span>
 
 				<div class="wrap-input100 validate-input" data-validate="Please enter a valid search query">
-					<input class="input100" type="text" name="Song Name" placeholder="Search for songs...">
+					<input class="input100" type="text" name="Song Name" id="bar" placeholder="Search for songs, albums, or artists...">
 					<span class="focus-input100"></span>
 				</div>
 
@@ -75,9 +77,130 @@
 				</div>
 
 			</form>
+			<script>
+				$("#searchbar").submit(function(){
+					var data = $("#searchbar").serializeArray();
+					var search_query = (data[0]["value"]);
+					// alert(search_query);
+					var jqXHR = $.ajax({
+						type: "POST",
+						url: "/search",
+						async: true,
+						data: {query: search_query},
+						dataType:"json",
+						success: function(data){
+							console.log(data);
+							// console.log(data[0]);
+							data.forEach(function(item, index){
+								var album_link = item["album"];
+								var artists = item["artists"].join(", ");
+								var name = item["name"];
+								var uri = item["uri"];
+
+								var container = document.getElementById("container-results");
+								var new_row = document.createElement("div");
+								new_row.className = "d-flex bd-highlight  mb-3";
+								var img_div = document.createElement("div");
+								img_div.className = "p-2 bd-highlight align-self-center";
+								var img = document.createElement("img");
+								img.src = album_link;
+								img_div.appendChild(img);
+
+								var text_div = document.createElement("div");
+								text_div.className = "p-2 bd-highlight";
+								var header4 = document.createElement("h4");
+								var song_node = document.createTextNode(name);
+								header4.appendChild(song_node);
+								var para = document.createElement("p");
+								var artist_node = document.createTextNode(artists);
+								para.appendChild(artist_node);
+								text_div.appendChild(header4);
+								text_div.appendChild(para);
+
+								var button_container = document.createElement("div");
+								button_container.className = "ml-auto p-2 bd-highlight align-self-center";
+								var button = document.createElement("button");
+								button.className = "btn btn-success align-self-center";
+								button.appendChild(document.createTextNode("Add Song"));
+								button.onclick =  function(){
+									alert(name.concat(" has been added."));
+									console.log("/songs/{{name}}");
+									var jx = $.ajax({
+										type: "POST",
+										url: "/songs/{{name}}",
+										async: true,
+										data: {song_uri: uri},
+										dataType:"json",
+										success: function(data){
+											console.log(uri);
+										}
+									});
+								};
+								button_container.appendChild(button);
+
+								new_row.appendChild(img_div);
+								new_row.appendChild(text_div);
+								new_row.appendChild(button_container);
+
+								container.appendChild(new_row);
+							});
+							$("#SearchModal").modal();
+						}
+					});
+
+					// alert(search_query);
+				});
+					// some javascript var = search search_results
+					// use javascript to display modal
+			</script>
+
+
 		</div>
 	</div>
 
+	<!-- Modal -->
+	<div id="SearchModal" class="modal" role="dialog">
+	  <div class="modal-dialog modal-dialog-centered">
+
+	    <!-- Modal content-->
+	    <div class="modal-content">
+	      <div class="modal-header">
+					<div class='col-12 modal-title text-center'>
+        			Search Results
+	        	<button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+	          	<span aria-hidden='true'>&times;</span>
+	        	</button>
+      	</div>
+	      </div>
+	      <div class="modal-body">
+					<div id = "container-results" class="container-fluid">
+						<!-- DYNAMICALLY ADD ELEMENTS HERE -->
+						<!--
+						SAMPLE ENTRY GOES HERE
+
+						<div class="row">
+							<div class="pull-left pr-3">
+								<img src="https://i.scdn.co/image/0e5415ebdb2045b7f53b936e8be3d3ae42a80b38">
+							</div>
+							<div>
+								<h4>Ivy</h4>
+								<p>Frank Ocean</p>
+							</div>
+							<div class="col-md-4"></div>
+							<div class="d-flex">
+								<button type="button" class="btn btn-success align-self-center">Add Song</button>
+							</div>
+						</div>
+						-->
+					</div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+
+	  </div>
+	</div>
 	<script src="../static/vendor/jquery/jquery-3.2.1.min.js"></script>
 	<script src="../static/vendor/animsition/js/animsition.min.js"></script>
 	<script src="../static/vendor/bootstrap/js/popper.js"></script>
@@ -87,7 +210,11 @@
 	<script src="../static/vendor/daterangepicker/daterangepicker.js"></script>
 	<script src="../static/vendor/countdowntime/countdowntime.js"></script>
 	<script src="../static/js/main.js"></script>
-
+	<script>
+		$('#SearchModal').on('hidden.bs.modal', function () {
+			$("#container-results").empty();
+		});
+	</script>
 
 </body>
 </html>

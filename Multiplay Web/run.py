@@ -25,19 +25,27 @@ def show_test():
 
 @app.route("/search", methods=["POST", "GET"])
 def search_query():
-    if request.method == "POST":
-        query = request.form["Song Query"]
+    if (request.method == "POST"):
+        query = request.form["query"]
         print("requesting", query)
         search_client = search.SpotifySearch()
         search_results = search_client.search(query)
-    if  request.method =="GET":
-        print("visiting website")
     return jsonify(search_results)
 
 
 @app.route("/songs/<lobby_name>", methods=["POST", "GET"])
 def show_songs(lobby_name):
+    if request.method == "POST":
 
+        song_uri = request.form["song_uri"]
+        # print(song_uri)
+        if song_queues.get(lobby_name) == None:
+            song_queues[lobby_name] = []
+        song_queues[lobby_name].append(song_uri)
+        print("Submitting song", song_uri)
+    return jsonify(song_queues[lobby_name])
+
+"""
     if request.method == "POST":
         # check if POST method is from Submit Song button
         if request.form["action"] == "Search":
@@ -46,10 +54,10 @@ def show_songs(lobby_name):
                 song_queues[lobby_name] = []
             song_queues[lobby_name].append(result)
             print("Submitting song", result)
-        """
+
+
         elif request.form["action"] == "Clear Queue":
             song_queues[lobby_name] = []
 
         Permission to clear queue is not granted to all users. Only given to master phone, through android app.
         """
-    return jsonify(song_queues[lobby_name])
