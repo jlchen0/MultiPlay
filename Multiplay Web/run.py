@@ -35,6 +35,7 @@ def search_query():
 
 @app.route("/songs/<lobby_name>", methods=["POST", "GET"])
 def show_songs(lobby_name):
+    global song_queues
     if request.method == "POST":
 
         song_uri = request.form["song_uri"]
