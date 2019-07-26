@@ -1,8 +1,11 @@
-from flask import Flask, render_template, request, jsonify, url_for, redirect
+from flask import Flask, render_template, request, jsonify, url_for, redirect, session
 import search
+import datetime
 app = Flask(__name__)
+app.permanent_session_lifetime = datetime.timedelta(days=1)
+app.secret_key = "1234"
 
-song_queues = dict()
+# song_queues = dict()
 
 @app.route("/", methods=["POST", "GET"])
 def index():
@@ -35,6 +38,14 @@ def search_query():
 
 @app.route("/songs/<lobby_name>", methods=["POST", "GET"])
 def show_songs(lobby_name):
+    if request.method == "POST":
+        song_uri = request.form["song_uri"]
+        if session.get(lobby_name) == None:
+            session[lobby_name] = []
+        session.get(lobby_name).append(song_uri)
+        session.modified=True
+    return jsonify(session.get(lobby_name))
+    """
     global song_queues
     if request.method == "POST":
 
@@ -47,7 +58,7 @@ def show_songs(lobby_name):
     print(song_queues.keys())
     return jsonify(song_queues[lobby_name])
 
-"""
+_________________________________________________________________
     if request.method == "POST":
         # check if POST method is from Submit Song button
         if request.form["action"] == "Search":
