@@ -6,6 +6,11 @@ import os
 class SpotifySearch:
     id = os.environ.get("WEB_KEY")
     secret = os.environ.get("WEB_SECRET")
+    if (id == None):
+        file = open("config.txt", "r")
+        api = file.read().split("\n")
+        id = api[0]
+        secret = api[1]
     client_credentials_manager = SpotifyClientCredentials(
                             client_id=id,
                             client_secret = secret)
