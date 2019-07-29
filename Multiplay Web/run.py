@@ -43,7 +43,7 @@ def show_songs(lobby_name):
         if cache.get(lobby_name) == None:
             cache.set(lobby_name, [])
         update = cache.get(lobby_name) + [song_uri]
-        cache.set(lobby_name, update)
+        cache.set(lobby_name, update, timeout=0)
         # print("Submitting song", song_uri)
         print(update)
     return jsonify(cache.get(lobby_name))
