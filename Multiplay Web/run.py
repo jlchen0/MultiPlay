@@ -1,11 +1,11 @@
-from flask import Flask, render_template, request, jsonify, url_for, redirect, session
+from flask import Flask, render_template, request, jsonify, url_for, redirect
+from flask_caching import Cache
 import search
-import datetime
-app = Flask(__name__)
-app.permanent_session_lifetime = datetime.timedelta(days=1)
-app.secret_key = "1234"
 
-# song_queues = dict()
+
+app = Flask(__name__)
+
+cache = Cache(app, config={"CACHE_TYPE": "simple"})
 
 @app.route("/", methods=["POST", "GET"])
 def index():
@@ -40,12 +40,16 @@ def search_query():
 def show_songs(lobby_name):
     if request.method == "POST":
         song_uri = request.form["song_uri"]
-        if session.get(lobby_name) == None:
-            session[lobby_name] = []
-        session.get(lobby_name).append(song_uri)
-        session.modified=True
-    return jsonify(session.get(lobby_name))
+        if cache.get(lobby_name) == None:
+            cache.set(lobby_name, [])
+        update = cache.get(lobby_name) + [song_uri]
+        cache.set(lobby_name, update)
+        # print("Submitting song", song_uri)
+        print(update)
+    return jsonify(cache.get(lobby_name))
+
     """
+    ###### W/  GLOBAL VARIABLE SONG_QUEUES
     global song_queues
     if request.method == "POST":
 

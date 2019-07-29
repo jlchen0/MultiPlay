@@ -6,7 +6,7 @@ import os
 class SpotifySearch:
     id = os.environ.get("WEB_KEY")
     secret = os.environ.get("WEB_SECRET")
-    if (id == None):
+    if (id == None): # aka if running on local
         file = open("config.txt", "r")
         api = file.read().split("\n")
         id = api[0]
