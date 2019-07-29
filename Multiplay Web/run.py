@@ -40,6 +40,7 @@ def search_query():
 def show_songs(lobby_name):
     if request.method == "POST":
         song_uri = request.form["song_uri"]
+        print(cache.get(lobby_name))
         if cache.get(lobby_name) == None:
             cache.set(lobby_name, [])
         update = cache.get(lobby_name) + [song_uri]
