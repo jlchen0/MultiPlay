@@ -45,7 +45,9 @@ def show_songs(lobby_name):
         print(cache.lrange(lobby_name, 0, -1)) # print out current results
         print("Submitting song", song_uri)
         cache.rpush(lobby_name, song_uri)
-    return jsonify(cache.lrange(lobby_name, 0, -1))
+    current_queue = [x.decode("utf-8" for x in cache.lrange(lobby_name, 0, -1)]
+
+    return jsonify(current_queue)
 
     """
     ###### W/  GLOBAL VARIABLE SONG_QUEUES
