@@ -1,11 +1,13 @@
 from flask import Flask, render_template, request, jsonify, url_for, redirect
 from flask_caching import Cache
 import search
-
+import os
+import redis
 
 app = Flask(__name__)
 
-cache = Cache(app, config={"CACHE_TYPE": "simple"})
+# cache = Cache(app, config={"CACHE_TYPE": "simple"})
+cache = redis.from_url(os.environ["REDISCLOUD_URL"])
 
 @app.route("/", methods=["POST", "GET"])
 def index():
@@ -44,7 +46,7 @@ def show_songs(lobby_name):
         if cache.get(lobby_name) == None:
             cache.set(lobby_name, [])
         update = cache.get(lobby_name) + [song_uri]
-        cache.set(lobby_name, update, timeout=0)
+        cache.set(lobby_name, update)
         # print("Submitting song", song_uri)
         print(update)
     return jsonify(cache.get(lobby_name))
