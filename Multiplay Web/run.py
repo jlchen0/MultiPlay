@@ -49,7 +49,7 @@ def show_songs(lobby_name):
 
     return jsonify(current_queue)
 
-@app.route("delete/<lobby_name>")
+@app.route("/delete/<lobby_name>")
 def clear_queue(lobby_name):
     cache.delete(lobby_name)
     return jsonify("Success")
