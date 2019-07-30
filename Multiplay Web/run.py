@@ -42,14 +42,10 @@ def search_query():
 def show_songs(lobby_name):
     if request.method == "POST":
         song_uri = request.form["song_uri"]
-        print(cache.get(lobby_name))
-        if cache.get(lobby_name) == None:
-            cache.set(lobby_name, [])
-        update = cache.get(lobby_name) + [song_uri]
-        cache.set(lobby_name, update)
-        # print("Submitting song", song_uri)
-        print(update)
-    return jsonify(cache.get(lobby_name))
+        print(cache.lrange(lobby_name, 0, -1)) # print out current results
+        print("Submitting song", song_uri)
+        cache.rpush(lobby_name, song_uri)
+    return jsonify(cache.lrange(lobby_name, 0, -1))
 
     """
     ###### W/  GLOBAL VARIABLE SONG_QUEUES
