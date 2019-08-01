@@ -55,7 +55,7 @@ def clear_queue(lobby_name):
     return jsonify("Success")
 
 
-@app.route("poll/<lobby_name>")
+@app.route("/poll/<lobby_name>")
 def poll(lobby_name):
     cache.lpop(lobby_name)
     return jsonify("Success")
