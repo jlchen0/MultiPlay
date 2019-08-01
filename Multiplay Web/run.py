@@ -53,6 +53,12 @@ def show_songs(lobby_name):
 def clear_queue(lobby_name):
     cache.delete(lobby_name)
     return jsonify("Success")
+
+
+@app.route("poll/<lobby_name>")
+def poll(lobby_name):
+    cache.lpop(lobby_name)
+    return jsonify("Success")
     """
     ###### W/  GLOBAL VARIABLE SONG_QUEUES
     global song_queues
