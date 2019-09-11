@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LobbyActivity">
+
+    <TextView
+        android:id="@+id/Welcome"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.049"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:text="YOU ARE NOW HOSTING LOBBY"
+        android:textColor="#827ffe">
+    </TextView>
+
+    <TextView
+        android:id="@+id/Lobby"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="#827ffe"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Welcome"
+        app:layout_constraintVertical_bias="0.0"></TextView>
+
+    <TextView
+        android:id="@+id/addSongsAt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ADD SONGS AT..."
+        android:textColor="#827ffe"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Lobby"
+        app:layout_constraintVertical_bias="0.041"></TextView>
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="150dp"
+        android:layout_height="2dp"
+        android:background="#c0c0c0"
+        app:layout_constraintBottom_toTopOf="@+id/addSongsAt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Lobby"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/link"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:autoLink="web"
+        android:background="@drawable/rounded_tv"
+        android:gravity="center"
+        android:padding="10dp"
+        android:textColorLink="#827FFE"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.219"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addSongsAt"
+        app:layout_constraintVertical_bias="0.033">
+    </TextView>
+
+    <ImageButton
+        android:id="@+id/copy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/clipboard"
+        android:padding="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintStart_toEndOf="@+id/link"
+        app:layout_constraintTop_toBottomOf="@+id/line"
+        app:layout_constraintVertical_bias="0.117"></ImageButton>
+</androidx.constraintlayout.widget.ConstraintLayout>
