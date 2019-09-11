@@ -14,6 +14,7 @@ A search for "Frank Ocean" yields Spotify's catalog for the same queue:
 ![](https://github.com/jlchen0/MultiPlay/blob/master/Multiplay%20Web/Screen%20Shot%202019-09-11%20at%2011.12.48%20AM.png)
 
 Mobile App: 
+
 <img src="https://github.com/jlchen0/MultiPlay/blob/master/Multiplay%20App/ss2.png" alt="Your image title" width="250"/>
 <img src="https://github.com/jlchen0/MultiPlay/blob/master/Multiplay%20App/ss1.png" alt="Your image title" width="250"/>
 
